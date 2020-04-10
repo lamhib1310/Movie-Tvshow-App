@@ -1,0 +1,45 @@
+<div class="m-5" style="padding-top:10px">
+    <input type="text" #showSearchInput class="form-control" placeholder="search"/>
+</div>
+
+<div class="container" style="text-align:center">
+  <div class="row">
+      <ng-container *ngIf="apiResponse['Response'] == 'False'; else elseTemplate">
+          <div class="col-12 text-center">
+              <div class="alert alert-danger" role="alert">
+                  {{apiResponse['Error']}}
+              </div>
+          </div>
+      </ng-container>
+      <ng-template #elseTemplate>
+          <div class="row" style="margin-top:30px">
+            <div class="card-deck">
+              <div class="col-3" *ngFor="let show of apiResponse?.results">
+                  <div class="card" style="margin:10px">
+                      <img  class="card" src="http://image.tmdb.org/t/p/w185//{{show?.poster_path}}">
+                      <div class="card-body">
+                          <h5 class="card-title">{{show?.name}}</h5>
+                          <a  routerLink="/tvshow/details/{{show?.id}}" class="stretched-link">See Details</a>
+                      </div>
+                  </div>
+                </div>
+              </div>
+          </div>
+      </ng-template>
+  </div>
+
+
+  <div class="row" style="margin-top:30px" *ngIf="!isSearching">
+    <div class="card-deck">
+        <div class="col-3" *ngFor="let show of shows$?.results | slice:0:10">
+            <div class="card" style="margin:10px">
+                <img  class="card" src="http://image.tmdb.org/t/p/w185//{{show?.poster_path}}">
+                <div class="card-body">
+                    <h5 class="card-title">{{show?.name}}</h5>
+                    <a  routerLink="/tvshow/details/{{show?.id}}" class="stretched-link">See Details</a>
+                </div>
+            </div>
+        </div>
+   </div>
+  </div> 
+</div>

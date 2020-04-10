@@ -1,0 +1,45 @@
+<div class="m-5" style="padding-top:10px">
+    <input type="text" #movieSearchInput class="form-control" placeholder="search"/>
+</div>
+
+<div class="container" style="text-align:center">
+  <div class="row">
+      <ng-container *ngIf="apiResponse['Response'] == 'False'; else elseTemplate">
+          <div class="col-12 text-center">
+              <div class="alert alert-danger" role="alert">
+                  {{apiResponse['Error']}}
+              </div>
+          </div>
+      </ng-container>
+      <ng-template #elseTemplate>
+          <div class="row" style="margin-top:30px">
+            <div class="card-deck">
+              <div class="col-3" *ngFor="let movie of apiResponse?.results">
+                  <div class="card" style="margin:10px">
+                      <img  class="card" src="http://image.tmdb.org/t/p/w185//{{movie?.poster_path}}">
+                      <div class="card-body">
+                          <h5 class="card-title">{{movie?.title}}</h5>
+                          <a  routerLink="/movie/details/{{movie?.id}}" class="stretched-link">See Details</a>
+                      </div>
+                  </div>
+                </div>
+            </div>
+          </div>
+      </ng-template>
+  </div>
+
+  <div class="row" style="margin-top:30px" *ngIf="!isSearching">
+    <div class="card-deck">
+        <div class="col-3" *ngFor="let movie of movies$?.results | slice:0:10">
+            <div class="card" style="margin:10px">
+                <img  class="card" src="http://image.tmdb.org/t/p/w185//{{movie?.poster_path}}">
+                <div class="card-body">
+                    <h5 class="card-title">{{movie?.title}}</h5>
+                    <a  routerLink="/movie/details/{{movie?.id}}" class="stretched-link">See Details</a>
+                </div>
+            </div>
+        </div>
+    </div>
+  </div> 
+</div>
+
